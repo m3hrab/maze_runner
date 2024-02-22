@@ -3,7 +3,7 @@ import pygame
 class Settings():
 
     def __init__(self) -> None:
-        self.screen_width = 9
+        self.screen_width = 960
         self.screen_height = 540
 
         self.cell_size = 20

@@ -5,6 +5,8 @@ from startpage import StartPage
 from settings_page import SettingsPage
 from instruction_page import InstructionPage
 from game_page import GamePage
+from login_page import LoginPage
+
 
 def run_game():
 
@@ -20,11 +22,11 @@ def run_game():
     settings_page = SettingsPage(screen, settings)
     instruction_page = InstructionPage(screen, settings)
     game_page = GamePage(screen, settings)
-
+    login_page = LoginPage(screen, settings)
 
 
     # Set current page
-    current_page = start_page
+    current_page = login_page
 
     # main game loop
     while True:
