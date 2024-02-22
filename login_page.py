@@ -1,5 +1,6 @@
 import pygame
-
+import sqlite3
+import os
 
 class LoginPage():
 
@@ -22,12 +23,21 @@ class LoginPage():
 
         self.background = pygame.image.load('assets/Images/login_page.png')
 
+        # Connect to or create SQLite database
+        self.conn = sqlite3.connect('users.db')
+        self.c = self.conn.cursor()
+
+        # Create table if not exists
+        self.c.execute('''CREATE TABLE IF NOT EXISTS users
+                          (username TEXT, password TEXT)''')
+        self.conn.commit()
+
     def handle_events(self, events):
         for event in events:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 return 0
-            
+
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 # If the user clicks on the input box rect
                 if self.username_rect.collidepoint(event.pos):
@@ -46,11 +56,17 @@ class LoginPage():
 
                 if self.login_button_rect.collidepoint(event.pos):
                     print("Login button clicked")
-                    # return self.username, self.password
-                
+                    if self.login_user():
+                        print("Login Successful")
+                    else:
+                        print("Incorrect username or password")
+
                 elif self.sign_up_button_rect.collidepoint(event.pos):
-                    # return 'sign_up'
                     print("Sign up button clicked")
+                    if self.sign_up_user():
+                        print("Sign up Successful")
+                    else:
+                        print("Username already exists")
 
             elif event.type == pygame.KEYDOWN:
                 if self.username_active or self.password_active:
@@ -67,10 +83,24 @@ class LoginPage():
                         elif self.password_active:
                             self.password += event.unicode
 
+    def login_user(self):
+        self.c.execute("SELECT * FROM users WHERE username=? AND password=?", (self.username, self.password))
+        if self.c.fetchone():
+            return True
+        else:
+            return False
+
+    def sign_up_user(self):
+        self.c.execute("SELECT * FROM users WHERE username=?", (self.username,))
+        if self.c.fetchone():
+            return False
+        else:
+            self.c.execute("INSERT INTO users (username, password) VALUES (?, ?)", (self.username, self.password))
+            self.conn.commit()
+            return True
+
     def draw(self):
         self.screen.blit(self.background, (0, 0))
-        # pygame.draw.rect(self.screen, (255, 255, 255), self.username_rect, 2)
-        # pygame.draw.rect(self.screen, (255, 255, 255), self.password_rect, 2)
 
         text_surface = self.font.render(self.username, True, (255, 255, 255))
         self.screen.blit(text_surface, (self.username_rect.x + 20, self.username_rect.y + 10))
@@ -83,7 +113,6 @@ class LoginPage():
 
         if self.password_active:
             pygame.draw.line(self.screen, (255, 255, 255), (self.password_rect.x + 20 + text_surface.get_width(), self.password_rect.y + 10), (self.password_rect.x + 20 + text_surface.get_width(), self.password_rect.y + 10 + text_surface.get_height()), 2)
-
 
         pygame.draw.rect(self.screen, (255, 255, 255), self.login_button_rect, 2)
         pygame.draw.rect(self.screen, (255, 255, 255), self.sign_up_button_rect, 2)
