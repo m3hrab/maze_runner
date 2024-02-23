@@ -8,6 +8,7 @@ COLS = WIDTH // CELL_SIZE
 
 # Colors
 BLACK = (0, 0, 0)
+RED = (255, 0, 0)
 WHITE = (255, 255, 255)
 
 def create_empty_maze(rows, cols):
@@ -24,6 +25,8 @@ def draw_maze(screen, maze):
         for x in range(len(maze[0])):
             if maze[y][x] == 1:
                 pygame.draw.rect(screen, BLACK, (x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
+            elif maze[y][x] == 2:
+                pygame.draw.rect(screen, RED, (x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
             else:
                 pygame.draw.rect(screen, WHITE, (x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE))
 
@@ -46,6 +49,7 @@ def main():
 
     running = True
     drawing = False
+    drawing_wall = False
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -59,9 +63,14 @@ def main():
                     row = y // CELL_SIZE
                     if 0 <= row < ROWS and 0 <= col < COLS:
                         maze[row][col] = 0
+                elif event.button == 2:  # Middle mouse button
+                    drawing_wall = True  # Add 2 to the cell, capped at 2
             elif event.type == pygame.MOUSEBUTTONUP:
                 if event.button == 1:
                     drawing = False
+                elif event.button == 3:
+                    drawing_wall = False
+
             elif event.type == pygame.MOUSEMOTION:
                 if drawing:
                     x, y = event.pos
@@ -69,11 +78,20 @@ def main():
                     row = y // CELL_SIZE
                     if 0 <= row < ROWS and 0 <= col < COLS:
                         maze[row][col] = 1
+
+                if drawing_wall:
+                    x, y = event.pos
+                    col = x // CELL_SIZE
+                    row = y // CELL_SIZE
+                    if 0 <= row < ROWS and 0 <= col < COLS:
+                        maze[row][col] = 2
+
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_s:
                     save_maze(maze, 'maze.txt')
                 elif event.key == pygame.K_l:
                     maze = load_maze('maze.txt')
+
 
         screen.fill(WHITE)
         draw_grid(screen)

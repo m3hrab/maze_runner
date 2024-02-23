@@ -16,7 +16,9 @@ class SignUpPage():
         self.email = ''
         self.password = ''
         self.font = pygame.font.Font(None, 32)
+        self.message_font = pygame.font.Font(None, 18)
 
+        
         self.username_rect = pygame.Rect(245, 105, 470, 50)
         self.email_rect = pygame.Rect(245, 190, 470, 50)
         self.password_rect = pygame.Rect(245, 282, 470, 50)
@@ -25,6 +27,9 @@ class SignUpPage():
         self.login_button_rect = pygame.Rect(415, 480, 133, 50)
 
         self.background = pygame.image.load('assets/Images/sign_up_page.png')
+        
+
+        self.message = ''
 
         # Connect to or create SQLite database
         self.conn = sqlite3.connect('users.db')
@@ -34,6 +39,12 @@ class SignUpPage():
         self.c.execute('''CREATE TABLE IF NOT EXISTS users
                           (username TEXT, email TEXT, password TEXT)''')
         self.conn.commit()
+
+    def reset(self):
+        self.username = ''
+        self.email = ''
+        self.password = ''
+        self.message = ''
 
     def handle_events(self, events):
         for event in events:
@@ -70,11 +81,10 @@ class SignUpPage():
                     return 'login_page'
 
                 elif self.sign_up_button_rect.collidepoint(event.pos):
-                    print("Sign up button clicked")
                     if self.sign_up_user():
-                        print("Sign up Successful")
-                    else:
-                        print("Username already exists")
+                        self.reset()
+                        return 'login_page'
+                    
 
             elif event.type == pygame.KEYDOWN:
                 if self.username_active or self.password_active or self.email_active:
@@ -97,13 +107,20 @@ class SignUpPage():
 
 
     def sign_up_user(self):
+        if self.username == '' or self.email == '' or self.password == '':
+            self.message = "Please fill in all fields to sign up"
+            return False
+        
         self.c.execute("SELECT * FROM users WHERE username=?", (self.username,))
         if self.c.fetchone():
+            self.message = "Username already exists"
             return False
         else:
             self.c.execute("INSERT INTO users (username, email, password) VALUES (?, ?, ?)", (self.username, self.email, self.password))
             self.conn.commit()
+            self.message = "Sign up Successful"
             return True
+
 
     def draw(self):
         self.screen.blit(self.background, (0, 0))
@@ -127,8 +144,5 @@ class SignUpPage():
         if self.password_active:
             pygame.draw.line(self.screen, (255, 255, 255), (self.password_rect.x + 20 + text_surface.get_width(), self.password_rect.y + 10), (self.password_rect.x + 20 + text_surface.get_width(), self.password_rect.y + 10 + text_surface.get_height()), 2)
 
-
-        pygame.draw.rect(self.screen, (255, 255, 255), self.username_rect, 2)
-        pygame.draw.rect(self.screen, (255, 255, 255), self.email_rect, 2)
-        pygame.draw.rect(self.screen, (255, 255, 255), self.password_rect, 2)
-        
+        text_surface = self.font.render(self.message, True, (255, 255, 255))
+        self.screen.blit(text_surface, (self.password_rect.x + 30, self.password_rect.y + 70))
