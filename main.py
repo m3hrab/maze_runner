@@ -6,7 +6,7 @@ from settings_page import SettingsPage
 from instruction_page import InstructionPage
 from game_page import GamePage
 from login_page import LoginPage
-
+from sign_up_page import SignUpPage
 
 def run_game():
 
@@ -23,6 +23,7 @@ def run_game():
     instruction_page = InstructionPage(screen, settings)
     game_page = GamePage(screen, settings)
     login_page = LoginPage(screen, settings)
+    signup_page = SignUpPage(screen, settings)
 
 
     # Set current page
@@ -36,7 +37,12 @@ def run_game():
         flag = current_page.handle_events(events) # handle events for the current page
         if flag == 0:
             sys.exit() # exit the game
-        
+        elif flag == 'start_page':
+            current_page = start_page
+        elif flag == 'login_page':
+            current_page = login_page
+        elif flag == 'sign_up_page':
+            current_page = signup_page
         elif flag == 'main_page':
             current_page = start_page
         elif flag == 'settings_page':

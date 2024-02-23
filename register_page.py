@@ -114,5 +114,5 @@ class LoginPage():
         if self.password_active:
             pygame.draw.line(self.screen, (255, 255, 255), (self.password_rect.x + 20 + text_surface.get_width(), self.password_rect.y + 10), (self.password_rect.x + 20 + text_surface.get_width(), self.password_rect.y + 10 + text_surface.get_height()), 2)
 
-        pygame.draw.rect(self.screen, (255, 255, 255), self.login_button_rect, 2)
-        pygame.draw.rect(self.screen, (255, 255, 255), self.sign_up_button_rect, 2)
+        # pygame.draw.rect(self.screen, (255, 255, 255), self.login_button_rect, 2)
+        # pygame.draw.rect(self.screen, (255, 255, 255), self.sign_up_button_rect, 2)
