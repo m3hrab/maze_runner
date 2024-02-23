@@ -9,7 +9,7 @@ class SettingsPage():
         self.settings = settings
 
         # Load the background image and get its rect.
-        self.background_img = pygame.image.load('assets/Images/settings.png')
+        self.background_img = pygame.image.load('assets/Images/settings_page.png')
         self.background_img_rect = self.background_img.get_rect()
 
         self.screen_rect = screen.get_rect()
@@ -17,7 +17,7 @@ class SettingsPage():
 
 
         # Buttons
-        self.back_button = Button(self.screen_rect.right - 95, 63 , 40, 40)
+        self.back_button = Button(self.screen_rect.right - 106, 64 , 42, 43)
     
     def handle_events(self, events):
         # handle keyboard and mouse events
@@ -33,4 +33,4 @@ class SettingsPage():
     def draw(self):
         # Draw the background image
         self.screen.blit(self.background_img, self.background_img_rect)
-        # self.back_button.draw(self.screen)    
+        self.back_button.draw(self.screen)    
