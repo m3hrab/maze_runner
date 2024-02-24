@@ -27,7 +27,7 @@ def run_game():
 
 
     # Set current page
-    current_page = start_page
+    current_page = login_page
 
     # main game loop
     while True:

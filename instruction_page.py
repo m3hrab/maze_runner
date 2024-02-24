@@ -33,4 +33,4 @@ class InstructionPage():
     def draw(self):
         # Draw the background image
         self.screen.blit(self.background_img, self.background_img_rect)
-        self.back_button.draw(self.screen)    
+        # self.back_button.draw(self.screen)    

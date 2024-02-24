@@ -7,6 +7,7 @@ class GamePage():
         self.screen = screen
         self.settings = settings
 
+        self.bg = pygame.image.load('assets/Images/bg.png')
         # Game variables
         self.level = 1
         self.lives = 3
@@ -22,12 +23,35 @@ class GamePage():
         self.destination_cell = (0, 0)
 
         # Player variables
-        self.player = pygame.Rect(0, 0, self.settings.cell_size, self.settings.cell_size)
+        # self.player = pygame.Surface((self.settings.cell_size, self.settings.cell_size))
+        # self.player.fill(self.settings.GREEN)
+        # self.player_rect = self.player.get_rect()
+        self.player = pygame.rect.Rect(0, 0, self.settings.cell_size, self.settings.cell_size)
         self.initialize_position()
 
         # Direction variables
         self.movement_flag = {'up': False, 'down': False, 'left': False, 'right': False}
 
+        # walls 
+        self.walls = []
+
+        for y in range(self.settings.rows):
+            for x in range(self.settings.columns):
+                if self.map_data[y][x] == 1:
+                    temp = pygame.surface.Surface((self.settings.cell_size, self.settings.cell_size))
+                    temp.fill(self.settings.color1)
+                    temp_rect = temp.get_rect()
+                    temp_rect.x = x * self.settings.cell_size
+                    temp_rect.y = y * self.settings.cell_size
+                    self.walls.append(temp_rect)
+                elif self.map_data[y][x] == 2:
+                    temp = pygame.surface.Surface((self.settings.cell_size, self.settings.cell_size))
+                    temp.fill(self.settings.color2)
+                    temp_rect = temp.get_rect()
+                    temp_rect.x = x * self.settings.cell_size
+                    temp_rect.y = y * self.settings.cell_size
+                    self.walls.append(temp_rect)
+                    
     def load_map(self):
         try:
             with open(f'levels/level{self.level}.txt', 'r') as f:
@@ -148,27 +172,43 @@ class GamePage():
         elif self.movement_flag['right']:
             if self.is_next_position_valid('right'):
                 self.player.x += 1
-
+        # if self.movement_flag['up']:
+        #     if not self.player_rect.collidelist(self.walls):
+        #         self.player_rect.y -= 1
+        # elif self.movement_flag['down']:
+        #     if not self.player_rect.collidelist(self.walls):
+        #         self.player_rect.y += 1
+        # elif self.movement_flag['left']:
+        #     if not self.player_rect.collidelist(self.walls):
+        #         self.player_rect.x -= 1
+        # elif self.movement_flag['right']:
+        #     if not self.player_rect.collidelist(self.walls):
+        #         self.player_rect.x += 1
 
 
     def draw_map(self):
         for y in range(self.settings.rows):
             for x in range(self.settings.columns):
                 if self.map_data[y][x] == 1:
-                    pygame.draw.rect(self.screen, self.settings.color1, (x * self.settings.cell_size, y * self.settings.cell_size, self.settings.cell_size, self.settings.cell_size), 2)
+                    pygame.draw.rect(self.screen, self.settings.color1, (x * self.settings.cell_size, y * self.settings.cell_size, self.settings.cell_size, self.settings.cell_size))
                 elif self.map_data[y][x] == 2:
-                    pygame.draw.rect(self.screen, self.settings.color2, (x * self.settings.cell_size, y * self.settings.cell_size, self.settings.cell_size, self.settings.cell_size), 2)
+                    pygame.draw.rect(self.screen, self.settings.color2, (x * self.settings.cell_size, y * self.settings.cell_size, self.settings.cell_size, self.settings.cell_size))
                 elif self.map_data[y][x] == 4:
                     pygame.draw.rect(self.screen, self.settings.color3, (x * self.settings.cell_size, y * self.settings.cell_size, self.settings.cell_size, self.settings.cell_size))
                 elif self.map_data[y][x] == 5:
                     pygame.draw.rect(self.screen, self.settings.color4, (x * self.settings.cell_size, y * self.settings.cell_size, self.settings.cell_size, self.settings.cell_size))
-                elif self.map_data[y][x] == 0:
-                    pygame.draw.rect(self.screen, "#ffffff", (x * self.settings.cell_size, y * self.settings.cell_size, self.settings.cell_size, self.settings.cell_size), 2)
+                # elif self.map_data[y][x] == 0:
+                    # pygame.draw.rect(self.screen, "#ffffff", (x * self.settings.cell_size, y * self.settings.cell_size, self.settings.cell_size, self.settings.cell_size), 2)
     def draw_player(self):
-        pygame.draw.rect(self.screen, self.settings.GREEN, self.player)
+        # self.screen.blit(self.player, self.player_rect)
+        pygame.draw.rect(self.screen, "#00ff00", self.player)
+
+    # def draw_walls(self):
+    #     for wall in self.walls:
+    #         pygame.draw.rect(self.screen, self.settings.color1, wall)
 
     def draw(self):
-        self.screen.fill(self.settings.bg_color)
+        self.screen.blit(self.bg, (0, 0))
         self.draw_map()
         self.update()
         self.draw_player()

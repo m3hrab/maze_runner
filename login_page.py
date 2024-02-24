@@ -23,6 +23,7 @@ class LoginPage():
 
         self.background = pygame.image.load('assets/Images/login_page.png')
 
+        self.message = ""
         # Connect to or create SQLite database
         self.conn = sqlite3.connect('users.db')
         self.c = self.conn.cursor()
@@ -33,6 +34,11 @@ class LoginPage():
         
         self.conn.commit()
 
+    def reset(self):
+        self.username = ''
+        self.password = ''
+        self.message = ''
+        
     def handle_events(self, events):
         for event in events:
             if event.type == pygame.QUIT:
@@ -56,20 +62,15 @@ class LoginPage():
                 # Check if the user clicks on the login button or sign up button
 
                 if self.login_button_rect.collidepoint(event.pos):
-                    print("Login button clicked")
                     if self.login_user():
-                        print("Login Successful")
+                        self.message = "Login Successful"
                         return 'start_page'
                     else:
-                        print("Incorrect username or password")
+                        self.message = "Invalid Username or Password"
 
                 elif self.sign_up_button_rect.collidepoint(event.pos):
+                    self.reset()
                     return 'sign_up_page'
-                    # print("Sign up button clicked")
-                    # if self.sign_up_user():
-                    #     print("Sign up Successful")
-                    # else:
-                    #     print("Username already exists")
 
             elif event.type == pygame.KEYDOWN:
                 if self.username_active or self.password_active:
@@ -118,3 +119,5 @@ class LoginPage():
             pygame.draw.line(self.screen, (255, 255, 255), (self.password_rect.x + 20 + text_surface.get_width(), self.password_rect.y + 10), (self.password_rect.x + 20 + text_surface.get_width(), self.password_rect.y + 10 + text_surface.get_height()), 2)
 
 
+        text_surface = self.font.render(self.message, True, (255, 255, 255))
+        self.screen.blit(text_surface, (self.password_rect.x + 30 , self.password_rect.y + 70))
