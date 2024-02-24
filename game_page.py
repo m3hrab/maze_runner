@@ -70,24 +70,32 @@ class GamePage():
 
     def is_next_position_valid(self, flag):
         # Check if the next position is not a wall
-        n, m = self.player.centery // self.settings.cell_size, self.player.centerx // self.settings.cell_size
-
+        n = self.player.y // self.settings.cell_size
+        m = self.player.x // self.settings.cell_size
 
         if flag == 'up':
             n -= 1
-            if n < 0 or self.map_data[n][m] == 1:
+            if n < 0 or self.map_data[n][m] == 1 or self.map_data[n][m] == 2:
+                print(f'Invalid position: {n, m}')
+                print(f'Map data: {self.map_data[n][m]}')
                 return False
         elif flag == 'down':
             n += 1
             if n >= self.settings.rows or self.map_data[n][m] == 1 or self.map_data[n][m] == 2:
+                print(f'Invalid position: {n, m}')
+                print(f'Map data: {self.map_data[n][m]}')
                 return False
         elif flag == 'left':
             m -= 1
             if m < 0 or self.map_data[n][m] == 1 or self.map_data[n][m] == 2:
+                print(f'Invalid position: {n, m}')
+                print(f'Map data: {self.map_data[n][m]}')
                 return False
         elif flag == 'right':
             m += 1
             if m >= self.settings.columns or self.map_data[n][m] == 1 or self.map_data[n][m] == 2:
+                print(f'Invalid position: {n, m}')
+                print(f'Map data: {self.map_data[n][m]}')
                 return False
         
         # update the player position
@@ -154,7 +162,8 @@ class GamePage():
                     pygame.draw.rect(self.screen, self.settings.color3, (x * self.settings.cell_size, y * self.settings.cell_size, self.settings.cell_size, self.settings.cell_size))
                 elif self.map_data[y][x] == 5:
                     pygame.draw.rect(self.screen, self.settings.color4, (x * self.settings.cell_size, y * self.settings.cell_size, self.settings.cell_size, self.settings.cell_size))
-
+                elif self.map_data[y][x] == 0:
+                    pygame.draw.rect(self.screen, "#ffffff", (x * self.settings.cell_size, y * self.settings.cell_size, self.settings.cell_size, self.settings.cell_size), 2)
     def draw_player(self):
         pygame.draw.rect(self.screen, self.settings.GREEN, self.player)
 
