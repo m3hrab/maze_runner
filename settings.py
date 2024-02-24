@@ -15,7 +15,11 @@ class Settings():
         self.BLACK = (0, 0, 0)
         self.WHITE = (255, 255, 255)
         self.BLUE = (0, 0, 255)
-
+        self.color1 = "#D4495C"
+        self.color2 = "#4CAEC0"
+        self.color3 = "#FFD662"
+        self.color4 = "#2C2442"
+        self.bg_color = "#2C2442"
 
 class Button():
     def __init__(self, x, y, width, height):

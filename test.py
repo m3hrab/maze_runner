@@ -6,6 +6,7 @@ import time
 
 
 class GameScreen():
+    
     def __init__(self, screen, settings, monkey) -> None:
         self.screen = screen
         self.settings = settings
