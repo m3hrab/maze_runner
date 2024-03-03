@@ -21,6 +21,15 @@ class Settings():
         self.color4 = "#2C2442"
         self.bg_color = "#2C2442"
 
+        self.player_speed = 1
+
+        # Timer Settings
+        self.timer_duration = 60  # 60 seconds
+        self.timer_font = pygame.font.Font("assets/fonts/Dynamo/Dynamo.ttf", 28)
+
+        # Level Settings
+        self.level_font = pygame.font.Font("assets/fonts/Dynamo/Dynamo.ttf", 28)
+
 class Button():
     def __init__(self, x, y, width, height):
         self.rect = pygame.Rect(x, y, width, height)
