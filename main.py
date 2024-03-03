@@ -35,7 +35,7 @@ def run_game():
         
         events = pygame.event.get() # get all events from the event queue
         flag = current_page.handle_events(events) # handle events for the current page
-        if flag == 0:
+        if flag == 'quit':
             sys.exit() # exit the game
         elif flag == 'start_page':
             current_page = start_page
