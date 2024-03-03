@@ -50,7 +50,7 @@ class SignUpPage():
         for event in events:
             if event.type == pygame.QUIT:
                 pygame.quit()
-                return 0
+                return 'quit'
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 # If the user clicks on the input box rect

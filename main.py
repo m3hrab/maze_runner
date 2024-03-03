@@ -58,5 +58,7 @@ def run_game():
         # Make the most recently drawn screen visible.
         pygame.display.flip()
 
+        # set the frame rate
+        pygame.time.Clock().tick(60)
 
 run_game()

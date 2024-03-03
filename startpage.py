@@ -25,7 +25,7 @@ class StartPage():
         # handle keyboard and mouse events
         for event in events:
             if event.type == pygame.QUIT:
-                return 0
+                return 'quit'
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
 

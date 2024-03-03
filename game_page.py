@@ -10,11 +10,12 @@ class GamePage():
     def __init__(self, screen, settings):
         self.screen = screen
         self.settings = settings
-
-        self.bg = pygame.image.load('assets/Images/bg.png')
+        
         # Game variables
         self.level = 1
         self.lives = 3
+        self.lives_img = pygame.image.load("assets/Images/heart.png") 
+        self.lives_img = pygame.transform.scale(self.lives_img, (40, 40))
 
         # Player variables
         self.player = Player(self.screen, self.settings)
@@ -30,6 +31,7 @@ class GamePage():
         pygame.time.set_timer(self.timer_event, 1000) 
         self.timer_paused = False
         self.time_left = 30
+
 
 
     def reset(self):
@@ -136,7 +138,10 @@ class GamePage():
                 #     pygame.draw.rect(self.screen, "#ffffff", (x * self.settings.cell_size, y * self.settings.cell_size, self.settings.cell_size, self.settings.cell_size), 1)
 
     def draw_timer(self):
-        timer_text = self.settings.timer_font.render(f"Time left: {self.time_left} Seconds", True, self.settings.WHITE)
+        if self.time_left < 10:
+            timer_text = self.settings.timer_font.render(f"Time left: 0{self.time_left} Seconds", True, self.settings.RED)
+        else:
+            timer_text = self.settings.timer_font.render(f"Time left: {self.time_left} Seconds", True, self.settings.WHITE)
         timer_text_rect = timer_text.get_rect()
         timer_text_rect.center = (self.settings.screen_width // 2, 50)
         self.screen.blit(timer_text, timer_text_rect)
@@ -147,11 +152,16 @@ class GamePage():
         level_text_rect.topleft = (50, 50)
         self.screen.blit(level_text, level_text_rect)
 
+    def draw_lives(self):
+        for i in range(self.lives):
+            self.screen.blit(self.lives_img, (self.settings.screen_width - 50 - (i * 50), 50))
+
     def draw(self):
         self.update()
         self.screen.fill(self.settings.bg_color)
         self.draw_timer()
         self.draw_level()
+        self.draw_lives()
         self.draw_map()
         self.player.draw()
 
