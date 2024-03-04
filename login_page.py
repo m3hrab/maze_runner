@@ -48,12 +48,14 @@ class LoginPage():
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 # If the user clicks on the input box rect
                 if self.username_rect.collidepoint(event.pos):
+                    self.settings.button_click_sound.play()
                     self.username_active = True
                     self.password_active = False
                 else:
                     self.username_active = False
 
                 if self.password_rect.collidepoint(event.pos):
+                    self.settings.button_click_sound.play()
                     self.password_active = True
                     self.username_active = False
                 else:
@@ -62,6 +64,7 @@ class LoginPage():
                 # Check if the user clicks on the login button or sign up button
 
                 if self.login_button_rect.collidepoint(event.pos):
+                    self.settings.button_click_sound.play()
                     if self.login_user():
                         self.message = "Login Successful"
                         return 'start_page'
@@ -69,11 +72,13 @@ class LoginPage():
                         self.message = "Invalid Username or Password"
 
                 elif self.sign_up_button_rect.collidepoint(event.pos):
+                    self.settings.button_click_sound.play()
                     self.reset()
                     return 'sign_up_page'
 
             elif event.type == pygame.KEYDOWN:
                 if self.username_active or self.password_active:
+                    self.settings.button_click_sound.play()
                     if event.key == pygame.K_RETURN:
                         return self.username, self.password
                     elif event.key == pygame.K_BACKSPACE:

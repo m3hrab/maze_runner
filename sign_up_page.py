@@ -55,6 +55,7 @@ class SignUpPage():
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 # If the user clicks on the input box rect
                 if self.username_rect.collidepoint(event.pos):
+                    self.settings.button_click_sound.play()
                     self.username_active = True
                     self.email_active = False
                     self.password_active = False
@@ -62,6 +63,7 @@ class SignUpPage():
                     self.username_active = False
 
                 if self.email_rect.collidepoint(event.pos):
+                    self.settings.button_click_sound.play()
                     self.email_active = True 
                     self.username_active = False 
                     self.password_active = False
@@ -69,6 +71,7 @@ class SignUpPage():
                     self.email_active = False 
 
                 if self.password_rect.collidepoint(event.pos):
+                    self.settings.button_click_sound.play()
                     self.password_active = True
                     self.username_active = False
                     self.email_active = False
@@ -78,9 +81,11 @@ class SignUpPage():
                 # Check if the user clicks on the login button or sign up button
 
                 if self.login_button_rect.collidepoint(event.pos):
+                    self.settings.button_click_sound.play()
                     return 'login_page'
 
                 elif self.sign_up_button_rect.collidepoint(event.pos):
+                    self.settings.button_click_sound.play()
                     if self.sign_up_user():
                         self.reset()
                         return 'login_page'
@@ -88,6 +93,7 @@ class SignUpPage():
 
             elif event.type == pygame.KEYDOWN:
                 if self.username_active or self.password_active or self.email_active:
+                    self.settings.button_click_sound.play()
                     if event.key == pygame.K_RETURN:
                         return self.username, self.password
                     elif event.key == pygame.K_BACKSPACE:

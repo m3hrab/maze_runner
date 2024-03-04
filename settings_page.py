@@ -35,10 +35,12 @@ class SettingsPage():
                 mouse_pos = pygame.mouse.get_pos()
 
                 if self.back_button.rect.collidepoint(mouse_pos):  
+                    self.settings.button_click_sound.play()
                     return 'main_page'
                 
                 if self.timer_scroll_bar.collidepoint(mouse_pos):
                     self.timer_dragging = True
+                    self.settings.button_click_sound.play()
             elif event.type == pygame.MOUSEBUTTONUP:
                 self.timer_dragging = False
 
@@ -53,7 +55,7 @@ class SettingsPage():
                 self.timer_duration = (mouse_pos_x - self.timer_scroll_bar.left) / self.timer_scroll_bar.width
 
             
-        self.settings.timer_duration = self.timer_duration
+        self.settings.timer_duration = int(self.timer_duration * 100)
 
 
     def draw(self):

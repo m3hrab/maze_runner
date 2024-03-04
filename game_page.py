@@ -53,6 +53,7 @@ class GamePage():
         self.game_complete_img = pygame.image.load("assets/Images/game_finish.png")
 
     def reset(self, flag):
+        # Reset the game variables
         if flag == 'game_complete':
             self.time_left = self.settings.timer_duration
             self.level = 1
@@ -129,21 +130,26 @@ class GamePage():
             if self.is_game_complete:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.game_complete_main_menu_button.rect.collidepoint(event.pos):
+                        self.settings.button_click_sound.play()
                         self.reset('game_complete')
                         return 'start_page'
                     
             elif self.is_level_complete:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.next_level_button.rect.collidepoint(event.pos):
+                        self.settings.button_click_sound.play()
                         self.reset('next_level')
                         # pygame.time.delay(500) # delay for 500ms
 
                     elif self.main_menu_button.rect.collidepoint(event.pos):
+                        self.settings.button_click_sound.play()
+                        self.reset('game_over')
                         return 'start_page'
 
             elif self.is_game_over:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.game_over_main_menu_button.rect.collidepoint(event.pos):
+                        self.settings.button_click_sound.play()
                         self.reset('game_over')
                         return 'start_page'
         
@@ -154,13 +160,13 @@ class GamePage():
                     if self.time_left == 0:
                         self.lives -= 1
                         self.reset('lose_life')
-                        pygame.time.delay(500) # delay for 500ms
+                        if self.lives != 0:
+                            self.settings.lose_live_sound.play()
+                        pygame.time.delay(1000) # delay for 1s
                     
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_ESCAPE:
-                        return 'start_page'
                     
-
+                    # Player movement flags 
                     directions = {'right': pygame.K_RIGHT, 'left': pygame.K_LEFT, 'up': pygame.K_UP, 'down': pygame.K_DOWN}
 
                     for direction, key in directions.items():
@@ -192,10 +198,13 @@ class GamePage():
         if self.check_destination():
             if self.level == self.total_levels:
                 self.is_game_complete = True
+                self.settings.win_sound.play()
             else:
                 self.is_level_complete = True
+                self.settings.level_up_sound.play()
         elif self.lives == 0:
             self.is_game_over = True
+            self.settings.game_over_sound.play()
         else:
             # Update the player's position
             self.player.update(self.map_data)

@@ -12,6 +12,7 @@ def run_game():
 
     """Initialize game and create a screen object."""
     pygame.init()
+    pygame.mixer.init()
     settings = Settings() # Create an instance of Settings class to use its attributes
 
     screen = pygame.display.set_mode((settings.screen_width, settings.screen_height)) # create screen window
@@ -27,8 +28,9 @@ def run_game():
 
 
     # Set current page
-    current_page = start_page
+    current_page = login_page
 
+    settings.background_music.play(-1) # play the background music
     # main game loop
     while True:
         # Watch for keyboard and mouse events.

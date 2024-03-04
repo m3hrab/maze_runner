@@ -27,7 +27,8 @@ class InstructionPage():
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
 
-                if self.back_button.rect.collidepoint(mouse_pos):  
+                if self.back_button.rect.collidepoint(mouse_pos): 
+                    self.settings.button_click_sound.play() 
                     return 'main_page'
                 
     def draw(self):

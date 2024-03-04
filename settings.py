@@ -3,6 +3,7 @@ import pygame
 class Settings():
 
     def __init__(self) -> None:
+        pygame.mixer.init()
         self.screen_width = 960
         self.screen_height = 540
 
@@ -36,6 +37,18 @@ class Settings():
         self.title_font = pygame.font.Font("assets/fonts/Dynamo/Dynamo.ttf", 48)
         self.sub_title_font = pygame.font.Font("assets/fonts/Dynamo/Dynamo.ttf", 32)
 
+
+        # Sounds
+        self.background_music = pygame.mixer.Sound("assets/sounds/game_music.mp3")
+        self.lose_live_sound = pygame.mixer.Sound("assets/sounds/lose_life.mp3")
+        self.level_up_sound = pygame.mixer.Sound("assets/sounds/level_up.mp3")
+        self.button_click_sound = pygame.mixer.Sound("assets/sounds/button_click.mp3")
+        self.game_over_sound = pygame.mixer.Sound("assets/sounds/game_over.wav")
+        self.win_sound = pygame.mixer.Sound("assets/sounds/win.mp3")
+
+        # volume
+        self.volume = 0.5
+        
 class Button():
     def __init__(self, x, y, width, height):
         self.rect = pygame.Rect(x, y, width, height)

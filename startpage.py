@@ -30,10 +30,13 @@ class StartPage():
                 mouse_pos = pygame.mouse.get_pos()
 
                 if self.start_button.rect.collidepoint(mouse_pos):  
+                    self.settings.button_click_sound.play()
                     return 'game_page'
                 elif self.instructions_button.rect.collidepoint(mouse_pos):
+                    self.settings.button_click_sound.play()
                     return 'instructions_page'
                 elif self.settings_button.rect.collidepoint(mouse_pos):
+                    self.settings.button_click_sound.play()
                     return 'settings_page'
     def draw(self):
         # Draw the background image
