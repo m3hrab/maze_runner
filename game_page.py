@@ -35,10 +35,6 @@ class GamePage():
 
 
     def reset(self):
-        self.level = 1
-        self.lives = 3
-        self.map_data = self.load_map()
-        self.initialize_position()
         self.time_left = 30
                     
     def load_map(self):
@@ -67,7 +63,7 @@ class GamePage():
     
     def check_destination(self):
         # check if the player has reached the destination
-        if self.player.rect.x == self.destination_cell[0] * self.settings.cell_size and self.player.rect.y == self.destination_cell[1] * self.settings.cell_size:
+        if self.player.rect.x >= self.destination_cell[0] * self.settings.cell_size: # and self.player.rect.y == self.destination_cell[1] * self.settings.cell_size:
             return True
         return False
     
@@ -80,8 +76,9 @@ class GamePage():
             if event.type == self.timer_event:
                 self.time_left -= 1
                 if self.time_left == 0:
-
-                    return 'start_page'
+                    # Lose a life
+                    self.lives -= 1
+                    self.reset()
                 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
@@ -116,9 +113,10 @@ class GamePage():
 
     def update(self):
         if self.check_destination():
-            self.next_level()
             self.level += 1
+            self.map_data = self.load_map()
             self.initialize_position()
+            self.reset()
         else:
             # Update the player's position
             self.player.update(self.map_data)

@@ -21,7 +21,7 @@ class Settings():
         self.color4 = "#2C2442"
         self.bg_color = "#2C2442"
 
-        self.player_speed = 1
+        self.player_speed = 3
 
         # Timer Settings
         self.timer_duration = 60  # 60 seconds
