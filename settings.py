@@ -22,13 +22,19 @@ class Settings():
         self.bg_color = "#2C2442"
 
         self.player_speed = 3
+        self.total_levels = 2
+        self.lives = 3
 
         # Timer Settings
-        self.timer_duration = 60  # 60 seconds
+        self.timer_duration = 20  # 60 seconds
         self.timer_font = pygame.font.Font("assets/fonts/Dynamo/Dynamo.ttf", 28)
 
         # Level Settings
         self.level_font = pygame.font.Font("assets/fonts/Dynamo/Dynamo.ttf", 28)
+
+        # Fonts
+        self.title_font = pygame.font.Font("assets/fonts/Dynamo/Dynamo.ttf", 48)
+        self.sub_title_font = pygame.font.Font("assets/fonts/Dynamo/Dynamo.ttf", 32)
 
 class Button():
     def __init__(self, x, y, width, height):
