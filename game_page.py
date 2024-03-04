@@ -136,7 +136,7 @@ class GamePage():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.next_level_button.rect.collidepoint(event.pos):
                         self.reset('next_level')
-                        pygame.time.delay(500) # delay for 500ms
+                        # pygame.time.delay(500) # delay for 500ms
 
                     elif self.main_menu_button.rect.collidepoint(event.pos):
                         return 'start_page'
@@ -154,7 +154,7 @@ class GamePage():
                     if self.time_left == 0:
                         self.lives -= 1
                         self.reset('lose_life')
-                        pygame.time.delay(1000) # delay for 500ms
+                        pygame.time.delay(500) # delay for 500ms
                     
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:

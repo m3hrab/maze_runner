@@ -26,7 +26,7 @@ class Settings():
         self.lives = 3
 
         # Timer Settings
-        self.timer_duration = 20  # 60 seconds
+        self.timer_duration = 30  # seconds
         self.timer_font = pygame.font.Font("assets/fonts/Dynamo/Dynamo.ttf", 28)
 
         # Level Settings

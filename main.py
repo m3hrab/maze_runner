@@ -50,6 +50,7 @@ def run_game():
         elif flag == 'instructions_page':
             current_page = instruction_page
         elif flag == 'game_page':
+            game_page.time_left = settings.timer_duration
             current_page = game_page
 
         # Redraw the screen during each pass through the loop.
