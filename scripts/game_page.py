@@ -2,8 +2,8 @@ import pygame
 import math
 
 # Import the Player class 
-from player import Player
-from settings import Button
+from scripts.player import Player
+from scripts.settings import Button
 
 class GamePage():
     """Main menu page for Maze Runner"""

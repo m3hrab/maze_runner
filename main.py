@@ -1,14 +1,14 @@
 import pygame
 import sys
-from settings import Settings 
+from scripts.settings import Settings 
 
 # Import all the game pages
-from startpage import StartPage
-from settings_page import SettingsPage
-from instruction_page import InstructionPage
-from game_page import GamePage
-from login_page import LoginPage
-from sign_up_page import SignUpPage
+from scripts.startpage import StartPage
+from scripts.settings_page import SettingsPage
+from scripts.instruction_page import InstructionPage
+from scripts.game_page import GamePage
+from scripts.login_page import LoginPage
+from scripts.sign_up_page import SignUpPage
 
 def run_game():
 
@@ -35,7 +35,7 @@ def run_game():
     settings.background_music.play(-1) # play the background music
     # main game loop
     while True:
-        
+
         # Watch for keyboard and mouse events.
         
         events = pygame.event.get() # get all events from the event queue
@@ -57,7 +57,7 @@ def run_game():
         elif flag == 'instructions_page':
             current_page = instruction_page 
         elif flag == 'game_page':
-            game_page.time_left = settings.timer_duration # reset the timer
+            #game_page.time_left = settings.timer_duration # reset the timer
             current_page = game_page 
 
         # Redraw the screen during each pass through the loop.

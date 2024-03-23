@@ -1,5 +1,5 @@
 import pygame
-from settings import Button
+from scripts.settings import Button
 
 class StartPage():
     """Main menu page for Maze Runner"""
@@ -41,4 +41,5 @@ class StartPage():
     def draw(self):
         # Draw the background image
         self.screen.blit(self.background_img, self.background_img_rect)
+        # self.settings_button.draw(self.screen)
         

@@ -47,11 +47,11 @@ class Settings():
         self.win_sound = pygame.mixer.Sound("assets/sounds/win.mp3")
 
         # volume
-        self.volume = 0.5
+        self.volume = 0.1
         
 class Button():
     def __init__(self, x, y, width, height):
         self.rect = pygame.Rect(x, y, width, height)
 
     def draw(self, screen):
-        pygame.draw.rect(screen, (0, 0, 0), self.rect,2)
+        pygame.draw.rect(screen, (255, 255, 255), self.rect,2)

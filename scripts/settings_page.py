@@ -1,5 +1,5 @@
 import pygame
-from settings import Button
+from scripts.settings import Button
 
 class SettingsPage():
     """Main menu page for Maze Runner"""
