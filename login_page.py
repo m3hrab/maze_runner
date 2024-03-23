@@ -21,6 +21,7 @@ class LoginPage():
         self.login_button_rect = pygame.Rect(415, 390, 133, 50)
         self.sign_up_button_rect = pygame.Rect(415, 480, 133, 50)
 
+        # Load the background image
         self.background = pygame.image.load('assets/Images/login_page.png')
 
         self.message = ""
@@ -42,8 +43,8 @@ class LoginPage():
     def handle_events(self, events):
         for event in events:
             if event.type == pygame.QUIT:
-                pygame.quit()
-                return 0
+                # Close the game
+                return 'quit'
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 # If the user clicks on the input box rect
